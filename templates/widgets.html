@@ -1,0 +1,136 @@
+<!-- Create/Edit -->
+<div class="row" ng-show="createWidgetPanel">
+
+    <!-- Widget listing -->
+    <div class="col-lg-12">
+        <div class="widget">
+            <div class="widget-header">Create/Edit Template</div>
+            <div class="widget-body">
+                <form class="form-horizontal">
+
+                    <legend>Create Widget</legend>
+
+                    <!-- Name-->
+                    <div class="controls">
+                        Name
+                        <input id="widget-name" name="widget-name" type="text" placeholder="foo-bar" class="input-medium" ng-model="newWidget.name">
+                    </div>
+
+                    <!-- Price -->
+                    <div class="controls">
+                        <div class="input-prepend">
+                            Price
+                            <span class="add-on">$</span>
+                            <input id="widget-price" name="widget-price" class="input-medium" placeholder="0.00" type="text" ng-model="newWidget.price">
+                        </div>
+                    </div>
+
+                    <!-- Color -->
+                    <div class="controls">
+                        Color
+                        <select id="widget-color" name="widget-color" class="input-large" ng-model="newWidget.color">
+                            <option>red</option>
+                            <option>purple</option>
+                            <option>black</option>
+                            <option>green</option>
+                            <option>magenta</option>
+                            <option>white</option>
+                            <option>depends on the viewing angle</option>
+                        </select>
+                    </div>
+
+                    <!-- Melts -->
+                    <div class="controls">
+                        Melts
+                        <input type="checkbox" name="widget-properties" id="widget-properties-0" value="melts" ng-model="newWidget.melts">
+                    </div>
+
+                    <!-- Inventory -->
+                    <div class="controls">
+                        Inventory
+                        <input id="widget-count" name="widget-count" type="number" placeholder="#?" class="input-small" ng-model="newWidget.inventory">
+                    </div>
+
+                    <br />
+
+                    <!-- Save -->
+                    <div class="btn btn-primary" ng-click="createWidget(newWidget);">Save</div>
+
+                    <!-- Cancel -->
+                    <div class="btn btn-danger" ng-click="createWidgetPanel = false;">Cancel</div>
+
+                </form>
+            </div><!-- End Widget body -->
+        </div><!-- End Widget -->
+    </div><!-- End Column -->
+</div><!-- End Row -->
+
+<!-- Tables -->
+<div class="row">
+
+    <!-- Widget listing -->
+    <div class="col-lg-12" >
+        <div class="widget">
+            <div class="widget-header">Widgets
+                <div class="pull-right">
+                    <button class="btn btn-sm btn-info" ng-click="createWidgetPanel = true">+ Create</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th>Name</th>
+                        <th>Color</th>
+                        <th>Price</th>
+                        <th>Melts?</th>
+                        <th>Inventory</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="widget in widgets track by $index | orderBy: widget.id">
+                        <td class="text-center" id="widgetId">
+                            <span ng-hide="widgetEditor">{{widget.id}}</span>
+                            <input type="text" ng-show="widgetEditor" ng-model="widget.id" style="width:50px; text-align: center;"/>
+                        </td>
+                        <td id="widgetName">
+                            <span ng-hide="widgetEditor">{{widget.name}}</span>
+                            <input type="text" ng-show="widgetEditor" ng-model="widget.name" />
+                        </td>
+                        <td id="widgetColor">
+                            <span ng-hide="widgetEditor">{{widget.color}}</span>
+                            <select ng-show="widgetEditor" ng-model="widget.color" class="input-large">
+                                <option>red</option>
+                                <option>purple</option>
+                                <option>black</option>
+                                <option>green</option>
+                                <option>magenta</option>
+                                <option>white</option>
+                                <option>depends on the viewing angle</option>
+                            </select>
+                        </td>
+                        <td id="widgetPrice">
+                            <span ng-hide="widgetEditor">{{widget.price | currency}}</span>
+                            <input ng-show="widgetEditor" type="text" ng-model="widget.price" />
+                        </td>
+                        <td id="widgetMelts">
+                            <span ng-hide="widgetEditor">{{widget.melts}}</span>
+                            <input ng-show="widgetEditor" type="checkbox" ng-model="widget.melts" />
+                        </td>
+                        <td id="widgetInventory">
+                            <span ng-hide="widgetEditor">{{widget.inventory}}</span>
+                            <input ng-show="widgetEditor" type="number" ng-model="widget.inventory" />
+                        </td>
+                        <td class="edit btn-primary text-center" ng-click="widgetEditor = true;" ng-hide="widgetEditor">Edit</td>
+                        <td class="edit btn-primary text-center" ng-click="widgetUpdate(widget); widgetEditor = false;" ng-show="widgetEditor">Save</td>
+                        <td ng-hide="widgetEditor" class="text-center"><a href="#widgets/{{widget.id}}">View Widget</a></td>
+                        <td class="delete btn-danger text-center" ng-click="widgetEditor = false" ng-show="widgetEditor">Cancel</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- End Widgets -->
+
+</div><!-- End Row -->
